@@ -4,7 +4,7 @@ from numba import vectorize, float64
 from typing import Dict, List, Callable, Tuple
 
 
-class UniversalFuntionSympyDispatcher:
+class UniversalFunctionSympyDispatcher:
     
     def __init__(self):
         # Will hold, for each name, a dict with keys 'f','df','d2f','param_syms'
@@ -91,7 +91,7 @@ class UniversalFuntionSympyDispatcher:
 if __name__ == "__main__":
 
     # Build dispatcher
-    dispatcher = UniversalFuntionSympyDispatcher()
+    dispatcher = UniversalFunctionSympyDispatcher()
 
     # 1) define the symbol
     x = sp.Symbol('x')
