@@ -5,23 +5,10 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "rapidroots"
 version = "0.1.0"
-description = "Modular AI framework for symbolic runtime testing"
-authors = [
-    { name="Shaun Quezon", email="your.email@example.com" }
-]
-license = { text = "MIT" }
-readme = "README.md"
+description = "Symbolic function dispatcher"
+authors = [{ name = "Shaun Quezon", email = "you@example.com" }]
 requires-python = ">=3.8"
-dependencies = [
-    "pytest",
-    "simpy",
-    "numba",
-    # Add any other runtime dependencies here
-]
-
-[project.urls]
-Homepage = "https://github.com/yourname/rapidroots"
-Repository = "https://github.com/yourname/rapidroots"
+dependencies = ["pytest"]
 
 [tool.setuptools]
 package-dir = { "" = "src" }
