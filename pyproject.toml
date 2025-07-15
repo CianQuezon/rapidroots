@@ -3,15 +3,37 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "rapidroots"
-version = "0.1.0"
-description = "Symbolic function dispatcher"
-authors = [{ name = "Shaun Quezon", email = "you@example.com" }]
+name            = "rapidroots"
+version         = "0.1.0"
+description     = "Symbolic function dispatcher"
+authors         = [
+  { name="Shaun Quezon", email="you@example.com" }
+]
+readme          = "README.md"
 requires-python = ">=3.8"
-dependencies = ["pytest"]
+
+# runtime dependencies
+dependencies = [
+  "numpy>=1.20",
+  "sympy>=1.8",
+  "numba>=0.53",        # if you rely on @njit etc.
+  "pytest-runner; extra == 'dev'"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=6.0",
+  "pytest-cov",
+  "mypy",
+  "black",
+  "isort",
+]
 
 [tool.setuptools]
+# Tell setuptools all your code lives under src/
 package-dir = { "" = "src" }
 
 [tool.setuptools.packages.find]
+# Look under src/ for your top‐level package folders
 where = ["src"]
+include = ["rapidroots*"]
