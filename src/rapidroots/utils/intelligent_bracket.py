@@ -24,7 +24,7 @@ class IntelligentBracketFinder:
         return_report: bool = False
     ) -> Union[Tuple[np.ndarray, np.ndarray], Tuple[np.ndarray, np.ndarray, Dict[str, int]]]:
         """
-        Multi-stage smart bracket search with vectorized operations
+        Multi-stage smart bracket search with vectorized operations and early exits
         
         Args:
             func_types: Array of function type names for each point
@@ -64,6 +64,13 @@ class IntelligentBracketFinder:
                 left_brackets, right_brackets, found_mask, chunk_size
             )
             report['local_search_success'] = found_mask.sum() - initial_found
+            
+            # Early exit after Strategy 1
+            if found_mask.all():
+                report['final_failures'] = 0
+                if return_report:
+                    return left_brackets, right_brackets, report
+                return left_brackets, right_brackets
         
         # Strategy 2: Preferred domain grid search using existing GridBracketScanner
         if preferred_domain is not None and not found_mask.all():
@@ -74,6 +81,13 @@ class IntelligentBracketFinder:
                 initial_guess, chunk_size
             )
             report['grid_search_success'] = found_mask.sum() - initial_found
+            
+            # Early exit after Strategy 2
+            if found_mask.all():
+                report['final_failures'] = 0
+                if return_report:
+                    return left_brackets, right_brackets, report
+                return left_brackets, right_brackets
         
         # Strategy 3: Global fallback domains
         if global_fallback and not found_mask.all():
@@ -83,6 +97,13 @@ class IntelligentBracketFinder:
                 left_brackets, right_brackets, found_mask, chunk_size
             )
             report['global_fallback_success'] = found_mask.sum() - initial_found
+            
+            # Early exit after Strategy 3
+            if found_mask.all():
+                report['final_failures'] = 0
+                if return_report:
+                    return left_brackets, right_brackets, report
+                return left_brackets, right_brackets
         
         # Handle failures
         report['final_failures'] = (~found_mask).sum()
